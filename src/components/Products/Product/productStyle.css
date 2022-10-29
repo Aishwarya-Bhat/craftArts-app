@@ -1,0 +1,26 @@
+.card-layout {
+    padding: 10px
+}
+
+.cardHeading {
+    /* color:aqua; */
+    display: flex;
+    justify-content: space-between;
+    font-weight:900;
+}
+
+.card-heading-font {
+    font-size: 16px;
+}
+
+.card-description-font {
+    font-size: small;
+    display: flex;
+    justify-content: flex-start;
+    color: rgb(108, 105, 105);
+}
+
+.card-button {
+    display: flex;
+    justify-content: flex-end;
+}
