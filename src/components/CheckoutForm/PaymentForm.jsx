@@ -7,7 +7,7 @@ import { Button, Card, Form } from 'react-bootstrap';
 
 const stripePromise = loadStripe('pk_test_51LxGHZH4POsR5fDJYW9alcsTp7tM8BddkVVxESkU94KrT5EFg9lvXvQEOWKlMyEHy8jJfDXl7eR47T10w364mMWs00s1kPJnBh');
 
-const PaymentForm = ({shipmentData, checkoutToken, prevStep, onCaptureCheckout, nextStep}) => {
+const PaymentForm = ({shipmentData, checkoutToken, prevStep, onCaptureCheckout, nextStep, timeOut}) => {
     console.log("In paymentform Shipment data", shipmentData);
 
     const formik = useFormik({
@@ -20,16 +20,18 @@ const PaymentForm = ({shipmentData, checkoutToken, prevStep, onCaptureCheckout, 
         }
     });
 
-const handlePay = async (elements, stripe) => {
-    console.log("Inside handlePay", elements, stripe);
+const handlePay = async (e,elements, stripe) => {
+    e.preventDefault();
+    // console.log("Inside handlePay CardElement", elements.getElement(CardElement));
+    // console.log("Inside handlePay", elements, stripe);
     if(!stripe || !elements) return;
 
-    const cardElmnt =  elements.getElement(CardElement);
+    const cardElement =  elements.getElement(CardElement);
 
-    const {error, paymentMethod} = await stripe.createPaymentMethod({type: 'card', card: cardElmnt});
-
+    console.log("Debugging..............", await stripe.createPaymentMethod({type: 'card', card: elements.getElement(CardElement)}))
+    const {error, paymentMethod} = await stripe.createPaymentMethod({type: 'card', card: cardElement});
     if(error) {
-        console.log(error);
+        console.log("Error in handlePay...........:", error);
     }
     else {
         const orderData = {
@@ -37,10 +39,10 @@ const handlePay = async (elements, stripe) => {
             customer: {firstname: shipmentData.firstName, lastname: shipmentData.lastName, email:shipmentData.email},
             shipping: {
                 name: 'Primary',
-                // street: shipmentData.address,
-                // town_city: shipmentData.city,
+                street: shipmentData.address,
+                town_city: shipmentData.city,
                 county_state: shipmentData.subDivision,
-                // postal_zip_code: shipmentData.zip,
+                postal_zip_code: shipmentData.zip,
                 country: shipmentData.country,
             },
             fulfillemnt: {shipping_method: shipmentData.option},
@@ -52,13 +54,14 @@ const handlePay = async (elements, stripe) => {
             }
         }
         onCaptureCheckout(checkoutToken.id, orderData);
+        timeOut();
         nextStep();
     }
 
 
 }
   return (
-    <> <h4>Payment Form </h4>
+    <> <h6>Payment Form </h6>
     <Card style={{ padding: "20px", margin: "2% 10%" }}>
     <Review checkoutToken={checkoutToken}/>
     <hr class="hr hr-blurry" />
@@ -71,7 +74,7 @@ const handlePay = async (elements, stripe) => {
                     <br /><br />
                     <div style={{ display: 'flex', justifyContent: 'space-between'}}>
                         <Button variant="primary" onClick={prevStep}>Back</Button>
-                        <Button type="submit" variant="primary" disabled={!stripe} onClick={() => handlePay(elements, stripe)}>Pay {checkoutToken.total.formatted_with_symbol}</Button>
+                        <Button type="submit" variant="primary" disabled={!stripe} onClick={(e) => handlePay(e,elements, stripe)}>Pay {checkoutToken.total.formatted_with_symbol}</Button>
                     </div>
                 </Form>
             )}

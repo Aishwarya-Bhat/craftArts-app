@@ -50,7 +50,7 @@ const Products = ({arts,onAddToCart}) => {
   return (
     <Container className="main-content" spacing={4}>
       <div>
-        <Row lg={4} md={3} xs={1} sm={2} className="g-4">
+        <Row lg={4} md={2} xs={1} sm={2} className="g-4">
           {arts.map((art) => {
             return (
               <Col key={art.id}>

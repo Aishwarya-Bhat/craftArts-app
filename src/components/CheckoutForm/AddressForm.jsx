@@ -75,31 +75,48 @@ const AddressForm = ({ checkoutToken, nextStep }) => {
         initialValues: {
             firstName: "",
             lastName: "",
+            address: "",
             email: "",
+            city:"",
+            zip:"",
             country: "AU",
             subDivision: "ACT",
             option: "International - $20"
         },
         validationSchema: Yup.object({
-            // firstName: Yup.string()
-            //     .max(15, "Must be 15 characters or less")
+            firstName: Yup.string()
+                .max(5, "Must be 5 characters atleast")
+                .required("Required"),
+            lastName: Yup.string()
+                .max(5, "Must be 5 characters atleast")
+                .required("Required"),
+            email: Yup.string()
+                .email("Invalid email address")
+                .required("Required"),
+            address: Yup.string()
+                .max(15, "Must be 15 characters atleast")
+                .required("Required"),
+            city: Yup.string()
+                .max(5, "Must be 5 characters atleast")
+                .required("Required"),
+            zip: Yup.number()
+                // .max(5, "Must be 5 digits atleast")
+                .required("Required"),
+            // country: Yup.string()
+            //     .max(5, "Must be 5 characters atleast")
+            //     .required("Please s"),
+            // subDivision: Yup.string()
+            //     .max(5, "Must be 5 characters atleast")
             //     .required("Required"),
-            // lastName: Yup.string()
-            //     .max(20, "Must be 20 characters or less")
+            // option: Yup.string()
+            //     .max(5, "Must be 5 characters atleast")
             //     .required("Required"),
-            // email: Yup.string()
-            //     .email("Invalid email address")
-            //     .required("Required")
+            
         }),
         onSubmit: values => {
-            // console.log("All values:", values)
-            // alert(JSON.stringify(values, null, 2));
             nextStep(values);
-
-            // setFormState(values);
         }
     });
-    // if(!shippingCountry) return "Loading.........."
     return (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
             <Card style={{ padding: "20px" }}>
@@ -199,7 +216,7 @@ const AddressForm = ({ checkoutToken, nextStep }) => {
                                 />
                                 <Form.Text className="text-danger">
                                     {formik.touched.zip && formik.errors.zip ? (
-                                        <div className="text-danger">{formik.errors.email}</div>
+                                        <div className="text-danger">{formik.errors.zip}</div>
                                     ) : null}
                                 </Form.Text>
                             </Form.Group>
@@ -209,12 +226,6 @@ const AddressForm = ({ checkoutToken, nextStep }) => {
                             <Form.Group controlId="country">
                                 <Form.Label>Shipping Country *</Form.Label>
                                 <Form.Select aria-label="Default select example"
-                                    // onClick={() => console.log("Inside jsx tag..............",formik.values.country)} 
-                                    // onChange={(e) => {
-                                    //     formik.handleChange(e);
-                                    //     console.log("field value change", e.target.value);
-                                    //     setShippingCountry(e.target.value);
-                                    // }}
                                     onChange={(e) => handleSelectChange(e, setShippingCountry)}
                                     name="country"
                                     onBlur={formik.handleBlur}
@@ -229,11 +240,6 @@ const AddressForm = ({ checkoutToken, nextStep }) => {
                             <Form.Group controlId="subDivision">
                                 <Form.Label>Shipping SubDivision *</Form.Label>
                                 <Form.Select aria-label="Default select example"
-                                    // onChange={(e) => {
-                                    //     formik.handleChange(e);
-                                    //     console.log("field value change", e.target.value);
-                                    //     setShippingSubDivison(e.target.value);
-                                    // }}
                                     onChange={(e) => handleSelectChange(e, setShippingSubDivison)}
                                     name="subDivision"
                                     onBlur={formik.handleBlur}
@@ -248,11 +254,6 @@ const AddressForm = ({ checkoutToken, nextStep }) => {
                             <Form.Group controlId="option">
                                 <Form.Label>Shipping Options *</Form.Label>
                                 <Form.Select aria-label="Default select example"
-                                    // onChange={(e) => {
-                                    //     formik.handleChange(e);
-                                    //     console.log("field value change", e.target.value);
-                                    //     setShippingOption(e.target.value);
-                                    // }}
                                     onChange={(e) => handleSelectChange(e, setShippingOption)}
                                     name="option"
                                     onBlur={formik.handleBlur}

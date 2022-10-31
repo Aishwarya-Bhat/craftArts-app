@@ -1,14 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Badge, Button, Card } from "react-bootstrap";
 import { BsCartPlusFill } from "react-icons/bs";
 import "./productStyle.css";
 import { MDBBadge, MDBIcon } from "mdb-react-ui-kit";
 
 const Product = ({ product, onAddToCart }) => {
+  const [windowSize, setWindowSize] = useState(getWindowSize());
+
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
+  function getWindowSize() {
+    const {innerWidth, innerHeight} = window;
+    return {innerWidth, innerHeight};
+  }
+  
   return (
-    <Card >
+    // <Card style={{ height: windowSize.innerWidth <= 920 && windowSize.innerWidth >=550 ? "530px" : "auto" }}>
+    <Card>
       <Card.Img
-        style={{ height: window.innerWidth >= 450 ? "350px" : "auto" }}
+        style={{ height: windowSize.innerWidth >= 550 ? "370px" : "auto" }}
         variant="top"
         src={product.image.url}
       />
