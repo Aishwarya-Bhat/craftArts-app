@@ -68,6 +68,26 @@ const App = () => {
 
   // console.log(cart);
 
+  const [windowSize, setWindowSize] = useState(getWindowSize());
+  
+
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
+  function getWindowSize() {
+    const {innerWidth, innerHeight} = window;
+    return {innerWidth, innerHeight};
+  }
+  
   return (
     <Router>
 
@@ -75,13 +95,14 @@ const App = () => {
         <NavbarFile totalItems={cart.total_items} />
         <Routes>
           {/* <Route exact path="/" element={< Products arts={products} onAddToCart={handleAddToCart} />}</Route>  */}
-          <Route exact path='/' element={< Products arts={products} onAddToCart={handleAddToCart} />}></Route>
+          <Route exact path='/' element={< Products arts={products} onAddToCart={handleAddToCart} windowSize={windowSize}/>}></Route>
           <Route exact path="/cart" element={
             <Cart
               handleUpdateQty={handleUpdateQty}
               handleRemoveItem={handleRemoveItem}
               handleEmptyCart={handleEmptyCart}
-              cart={cart} />}>
+              cart={cart} 
+              windowSize={windowSize}/>}>
           </Route>
           <Route exact path='/checkout' element={
             <Checkout cart={cart} order={order} onCaptureCheckout={handleCaptureCheckout} errorMsg={error} refreshCart={refreshCart}/>

@@ -4,33 +4,35 @@ import { BsCartPlusFill } from "react-icons/bs";
 import "./productStyle.css";
 import { MDBBadge, MDBIcon } from "mdb-react-ui-kit";
 
-const Product = ({ product, onAddToCart }) => {
-  const [windowSize, setWindowSize] = useState(getWindowSize());
+const Product = ({ product, onAddToCart, handleClickImg, windowSize }) => {
+  // const [windowSize, setWindowSize] = useState(getWindowSize());
+  
 
-  useEffect(() => {
-    function handleWindowResize() {
-      setWindowSize(getWindowSize());
-    }
+  // useEffect(() => {
+  //   function handleWindowResize() {
+  //     setWindowSize(getWindowSize());
+  //   }
 
-    window.addEventListener('resize', handleWindowResize);
+  //   window.addEventListener('resize', handleWindowResize);
 
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('resize', handleWindowResize);
+  //   };
+  // }, []);
 
-  function getWindowSize() {
-    const {innerWidth, innerHeight} = window;
-    return {innerWidth, innerHeight};
-  }
+  // function getWindowSize() {
+  //   const {innerWidth, innerHeight} = window;
+  //   return {innerWidth, innerHeight};
+  // }
   
   return (
-    // <Card style={{ height: windowSize.innerWidth <= 920 && windowSize.innerWidth >=550 ? "530px" : "auto" }}>
-    <Card>
+    <Card style={{ height: windowSize.innerWidth <= 1200 && windowSize.innerWidth >=550 ? "530px" : "auto" }}>
+    {/* <Card> */}
       <Card.Img
         style={{ height: windowSize.innerWidth >= 550 ? "370px" : "auto" }}
         variant="top"
         src={product.image.url}
+        onClick={() => handleClickImg(product.image.url)}
       />
       <div className="card-layout">
         <div className="cardHeading">

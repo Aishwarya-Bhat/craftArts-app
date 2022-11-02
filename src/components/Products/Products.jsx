@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Card, CardGroup } from "react-bootstrap";
+import ImageModal from "./ImageModal";
 import Product from "./Product/Product";
 import './style.css'
 
@@ -46,7 +47,16 @@ import './style.css'
 //   },
 // ];
 
-const Products = ({arts,onAddToCart}) => {
+
+
+const Products = ({arts,onAddToCart, windowSize}) => {
+  const [clickedImg, setClickedImg] = useState(null);
+
+  const handleClickImg = (clickedImgUrl) => {
+    setClickedImg(clickedImgUrl);
+  }
+
+  console.log("Prodcts............:", arts);
   return (
     <Container className="main-content" spacing={4}>
       <div>
@@ -54,12 +64,13 @@ const Products = ({arts,onAddToCart}) => {
           {arts.map((art) => {
             return (
               <Col key={art.id}>
-                <Product product={art} onAddToCart={onAddToCart}/>
+                <Product product={art} onAddToCart={onAddToCart} handleClickImg={handleClickImg} windowSize={windowSize}/>
               </Col>
             );
           })}
         </Row>
       </div>
+      {clickedImg && <ImageModal clickedImg={clickedImg} setClickedImg={setClickedImg}/>}
     </Container>
    
     

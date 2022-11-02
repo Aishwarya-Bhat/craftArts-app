@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, rgba(64, 224, 208,0.8), rgba(236, 139, 20, 0.8), rgba(239, 82, 160, 0.8));
+  /* url('../public/art.jpeg') no-repeat center center / cover; */
 }
 
 code {

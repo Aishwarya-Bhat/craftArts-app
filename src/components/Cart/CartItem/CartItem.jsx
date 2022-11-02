@@ -2,13 +2,13 @@ import React from 'react'
 import { Button, Card } from 'react-bootstrap'
 import {RiDeleteBin3Fill} from  'react-icons/ri'
 
-const CartItem = ({ cartEachItem, onUpdateCartQty, onRemoveFromCart }) => {
+const CartItem = ({ cartEachItem, onUpdateCartQty, onRemoveFromCart, windowSize }) => {
     // console.log("cart each items are:", cartEachItem);
     return (
         // <div>{cartEachItem.name}</div>
-        <Card>
+        <Card style={{ height: windowSize.innerWidth <= 1200 && windowSize.innerWidth >=550 ? "450px" : "auto" }}>
             <Card.Img
-                style={{ height: window.innerWidth >= 450 ? "350px" : "auto" }}
+                style={{ height: windowSize.innerWidth >= 450 ? "350px" : "auto" }}
                 variant="top"
                 src={cartEachItem.image.url}
             />
