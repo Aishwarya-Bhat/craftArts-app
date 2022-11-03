@@ -7,28 +7,23 @@ import { Button, Card, Form } from 'react-bootstrap';
 
 const stripePromise = loadStripe('pk_test_51LxGHZH4POsR5fDJYW9alcsTp7tM8BddkVVxESkU94KrT5EFg9lvXvQEOWKlMyEHy8jJfDXl7eR47T10w364mMWs00s1kPJnBh');
 
+const pageStyles = {
+  fullCard: { padding: "20px", margin: "2% 10%" },
+  paymentButtons: { display: "flex", justifyContent: "space-between" },
+};
 const PaymentForm = ({shipmentData, checkoutToken, prevStep, onCaptureCheckout, nextStep, timeOut}) => {
-    console.log("In paymentform Shipment data", shipmentData);
 
     const formik = useFormik({
         onSubmit: values => {
-            // console.log("All values:", values)
-            // alert(JSON.stringify(values, null, 2));
-            // nextStep(values);
-
-            // setFormState(values);
         }
     });
 
 const handlePay = async (e,elements, stripe) => {
     e.preventDefault();
-    // console.log("Inside handlePay CardElement", elements.getElement(CardElement));
-    // console.log("Inside handlePay", elements, stripe);
     if(!stripe || !elements) return;
 
     const cardElement =  elements.getElement(CardElement);
 
-    console.log("Debugging..............", await stripe.createPaymentMethod({type: 'card', card: elements.getElement(CardElement)}))
     const {error, paymentMethod} = await stripe.createPaymentMethod({type: 'card', card: cardElement});
     if(error) {
         console.log("Error in handlePay...........:", error);
@@ -62,7 +57,7 @@ const handlePay = async (e,elements, stripe) => {
 }
   return (
     <> <h6>Payment Form </h6>
-    <Card style={{ padding: "20px", margin: "2% 10%" }}>
+    <Card style={pageStyles.fullCard}>
     <Review checkoutToken={checkoutToken}/>
     <hr class="hr hr-blurry" />
     <h6>Payment Method</h6>
@@ -72,7 +67,7 @@ const handlePay = async (e,elements, stripe) => {
                 <Form onSubmit={formik.handleSubmit}>
                     <CardElement />
                     <br /><br />
-                    <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+                    <div style={pageStyles.paymentButtons}>
                         <Button variant="primary" onClick={prevStep}>Back</Button>
                         <Button type="submit" variant="primary" disabled={!stripe} onClick={(e) => handlePay(e,elements, stripe)}>Pay {checkoutToken.total.formatted_with_symbol}</Button>
                     </div>

@@ -5,6 +5,16 @@ import { commerce } from "../../../lib/commerce";
 import AddressForm from "../AddressForm";
 import PaymentForm from "../PaymentForm";
 
+const pageStyles = {
+    displayCenter: 
+    {display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "90vh",
+    flexDirection: "column"
+},
+    paddingHeading: { paddingTop: "20px" }
+}
 export default function Checkout({ cart, order, onCaptureCheckout, errorMsg, refreshCart }) {
     const [checkoutToken, setCheckoutToken] = useState(null);
     const [step, setStep] = useState(1);
@@ -12,6 +22,7 @@ export default function Checkout({ cart, order, onCaptureCheckout, errorMsg, ref
     const [isFinished, setIsFinished] = useState(false);
     const navigate = useNavigate();
 
+    
     const nextStep = (values) => {
         setStep(step + 1);
         setShipmentData(values);
@@ -31,11 +42,10 @@ export default function Checkout({ cart, order, onCaptureCheckout, errorMsg, ref
         const generateToken = async () => {
             try {
                 const toaken = await commerce.checkout.generateToken(cart.id, { type: 'cart' })
-                // console.log(toaken);
                 setCheckoutToken(toaken);
             }
             catch (error) {
-                console.log("Genretae token Error:", error);
+                console.log("Genrate token Error:", error);
                 navigate("/");
             }
         }
@@ -44,20 +54,20 @@ export default function Checkout({ cart, order, onCaptureCheckout, errorMsg, ref
 
     let Confirmation = () => order.customer ?
         (
-            <>
+            <div style={pageStyles.displayCenter}>
                 <h4>Thanks for your Puarchase {order.customer.firstName} {order.customer.lastName}!!</h4>
                 <hr />
                 <div>Order Ref: {order.customer_reference}</div>
                 <br />
                 <Link to="/"> <Button>Back to Home</Button></Link>
-            </>
+            </div>
         )
         : isFinished ? (
-            <>
+            <div style={pageStyles.displayCenter}>
                 <h4>Thanks for your Puarchase !!</h4>
                 <hr />
                 <Link to="/"> <Button onClick={refreshCart}>Back to Home</Button></Link>
-            </>
+            </div>
         ) :
             (
                 <Spinner animation="border" variant="info" />
@@ -73,14 +83,9 @@ export default function Checkout({ cart, order, onCaptureCheckout, errorMsg, ref
         </>
     }
 
-    console.log("All shippment data:", shipmentData);
     return (
-        // <>
-        // {checkoutToken && <AddressForm checkoutToken={checkoutToken}/>}
-        // {/* <AddressForm checkoutToken={checkoutToken}/> */}
-        // </>
         <>
-            <h2 style={{ paddingTop: "20px" }}>Checkout</h2>
+            <h2 style={pageStyles.paddingHeading}>Checkout</h2>
             {(() => {
                 switch (step) {
                     case 1:
@@ -95,12 +100,3 @@ export default function Checkout({ cart, order, onCaptureCheckout, errorMsg, ref
         </>
     );
 }
-
-
-// const Checkout = () => {
-//   return (
-//     <div>Checkout</div>
-//   )
-// }
-
-// export default Checkout

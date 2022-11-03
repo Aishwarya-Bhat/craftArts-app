@@ -3,7 +3,6 @@
 }
 
 .cardHeading {
-    /* color:aqua; */
     display: flex;
     justify-content: space-between;
     font-weight:900;

@@ -1,10 +1,6 @@
 import './App.css';
-import Simple from './Simple';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-// import Products from './components/Products/Products';
-// import NavbarFile from './components/Navbar/NavbarFile';
 
 import { Products, NavbarFile, Cart, Checkout } from './components'
 import { commerce } from './lib/commerce'
@@ -26,7 +22,6 @@ const App = () => {
   }
 
   const handleAddToCart = async (productId, quantity) => {
-    console.log("handle add..........................")
     const item = await commerce.cart.add(productId, quantity);
     setCart(item);
   }
@@ -66,8 +61,6 @@ const App = () => {
     fetchCart();
   }, []);
 
-  // console.log(cart);
-
   const [windowSize, setWindowSize] = useState(getWindowSize());
   
 
@@ -94,7 +87,6 @@ const App = () => {
       <div className="App">
         <NavbarFile totalItems={cart.total_items} />
         <Routes>
-          {/* <Route exact path="/" element={< Products arts={products} onAddToCart={handleAddToCart} />}</Route>  */}
           <Route exact path='/' element={< Products arts={products} onAddToCart={handleAddToCart} windowSize={windowSize}/>}></Route>
           <Route exact path="/cart" element={
             <Cart

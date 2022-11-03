@@ -9,6 +9,10 @@ body {
   /* url('../public/art.jpeg') no-repeat center center / cover; */
 }
 
+/* * {
+  font-family: 'cursive';
+} */
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

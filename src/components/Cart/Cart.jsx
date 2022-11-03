@@ -3,27 +3,54 @@ import { Container, Alert, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem/CartItem";
 
-const Cart = ({ cart, handleUpdateQty,handleRemoveItem, handleEmptyCart, windowSize }) => {
+const Cart = ({
+  cart,
+  handleUpdateQty,
+  handleRemoveItem,
+  handleEmptyCart,
+  windowSize,
+}) => {
+  const pageStyles = {
+    emptyCartStyle: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "90vh",
+      flexDirection: "column",
+    },
+    linkButton: { textDecoration: "none" },
+    filledCartStyle: {
+      paddingTop: "30px",
+    },
+    cartFooterMaxWidth: {
+      display: "flex",
+      justifyContent: "space-between",
+      paddingTop: "40px",
+      paddingBottom: "40px",
+    },
+    cartFooterMinWidth: { paddingTop: "40px", paddingBottom: "40px" },
+    cartTotalMaxWidth: { fontSize: "25px", fontWeight: "bold" },
+    cartTotalMinWidth: {
+      fontSize: "18px",
+      fontWeight: "bold",
+      paddingBottom: "8px",
+    },
+    emptyCartButton: { marginRight: "20px" },
+  };
+
   const EmptyCart = () => (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "90vh",
-        flexDirection:'column'
-      }}
-    >
+    <div style={pageStyles.emptyCartStyle}>
       <Alert variant="info">
         You don't have any items in your cart, start adding some!
       </Alert>
-      <Link style={{textDecoration:"none"}} to="/"><Button variant="info">Start Shopping!!</Button></Link>
+      <Link style={pageStyles.linkButton} to="/">
+        <Button variant="info">Start Shopping!!</Button>
+      </Link>
     </div>
   );
   const FilledCart = () => {
     return (
-      // <div style={{padding:"30px 50px" }}>
-      <div style={{paddingTop:"30px"}}>
+      <div style={pageStyles.filledCartStyle}>
         <Alert key="info" variant="info">
           Your cart items
         </Alert>
@@ -33,20 +60,45 @@ const Cart = ({ cart, handleUpdateQty,handleRemoveItem, handleEmptyCart, windowS
               {cart.line_items.map((cartEachItem) => {
                 return (
                   <Col key={cartEachItem.id}>
-                    <CartItem  cartEachItem={cartEachItem}  onUpdateCartQty={handleUpdateQty} onRemoveFromCart={handleRemoveItem} windowSize={windowSize}/>
+                    <CartItem
+                      cartEachItem={cartEachItem}
+                      onUpdateCartQty={handleUpdateQty}
+                      onRemoveFromCart={handleRemoveItem}
+                      windowSize={windowSize}
+                    />
                   </Col>
                 );
               })}
             </Row>
           </div>
         </Container>
-        <div style={windowSize.innerWidth >= 450 ? { display: "flex", justifyContent: "space-between", paddingTop:"40px", paddingBottom:"40px" } : {paddingTop:"40px", paddingBottom:"40px" }}>
-          <div style={windowSize.innerWidth >= 450 ? {fontSize: "25px", fontWeight:'bold'} : {fontSize: "18px", fontWeight:'bold', paddingBottom:"8px"}}>Subtotal: {cart.subtotal.formatted_with_symbol}</div>
+        <div
+          style={
+            windowSize.innerWidth >= 450
+              ? pageStyles.cartFooterMaxWidth
+              : pageStyles.cartFooterMinWidth
+          }
+        >
+          <div
+            style={
+              windowSize.innerWidth >= 450
+                ? pageStyles.cartTotalMaxWidth
+                : pageStyles.cartTotalMinWidth
+            }
+          >
+            Total: {cart.subtotal.formatted_with_symbol}
+          </div>
           <div>
-            <Button style={{ marginRight: "20px" }} variant="danger" onClick={handleEmptyCart}>
+            <Button
+              style={pageStyles.emptyCartButton}
+              variant="danger"
+              onClick={handleEmptyCart}
+            >
               Empty Cart
             </Button>
-            <Link to="/checkout" style={{textDecoration:"none"}}><Button variant="info">Checkout</Button></Link>
+            <Link to="/checkout" style={pageStyles.linkButton}>
+              <Button variant="info">Checkout</Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -57,7 +109,6 @@ const Cart = ({ cart, handleUpdateQty,handleRemoveItem, handleEmptyCart, windowS
 
   return (
     <Container>{!cart.total_items ? <EmptyCart /> : <FilledCart />}</Container>
-    // <EmptyCart />
   );
 };
 
