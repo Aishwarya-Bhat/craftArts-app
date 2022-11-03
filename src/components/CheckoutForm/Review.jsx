@@ -1,5 +1,4 @@
 import React from 'react'
-import { Card } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const pageStyles = {

@@ -9,7 +9,7 @@ const ImageModal = ({clickedImg, setClickedImg}) => {
   return (
     <>
     <div className='overlay dismiss' onClick={handleClick}>
-        <img src={clickedImg}/>
+        <img alt="selected product" src={clickedImg}/>
         </div>
     </>
   )

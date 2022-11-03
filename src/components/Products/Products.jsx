@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Card, CardGroup } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import ImageModal from "./ImageModal";
 import Product from "./Product/Product";
 import './style.css';

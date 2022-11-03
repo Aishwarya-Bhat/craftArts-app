@@ -1,6 +1,6 @@
-import { MDBBadge, MDBIcon } from 'mdb-react-ui-kit'
+import { MDBBadge } from 'mdb-react-ui-kit'
 import React from 'react'
-import { Button, Container, Form, Navbar } from 'react-bootstrap'
+import { Container, Navbar } from 'react-bootstrap'
 import { BsCartCheckFill } from "react-icons/bs";
 import { Link, useLocation } from 'react-router-dom';
 

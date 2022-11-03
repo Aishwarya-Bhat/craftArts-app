@@ -50,6 +50,7 @@ export default function Checkout({ cart, order, onCaptureCheckout, errorMsg, ref
             }
         }
         generateToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cart]);
 
     let Confirmation = () => order.customer ?

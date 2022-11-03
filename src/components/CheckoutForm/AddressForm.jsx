@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button, Container, Row, Form, Card } from "react-bootstrap";
+import { Button, Container, Form, Card } from "react-bootstrap";
 import { commerce } from '../../lib/commerce';
 import { Link } from "react-router-dom";
 
@@ -71,14 +71,17 @@ const AddressForm = ({ checkoutToken, nextStep }) => {
     }
     useEffect(() => {
         fetchShippingCountries(checkoutToken.id);
+        //eslint-disable-next-line
     }, [])
 
     useEffect(() => {
         if (shippingCountry) fetchShippingSubDivisions(shippingCountry)
+        //eslint-disable-next-line
     }, [shippingCountry]);
 
     useEffect(() => {
         if (shippingSubDivison) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubDivison);
+        //eslint-disable-next-line
     }, [shippingSubDivison])
 
     const formik = useFormik({
@@ -91,7 +94,8 @@ const AddressForm = ({ checkoutToken, nextStep }) => {
             zip:"",
             country: "AU",
             subDivision: "ACT",
-            option: "International - $20"
+            option: "International - $20",
+            shippingOption: shippingOption,
         },
         validationSchema: Yup.object({
             firstName: Yup.string()

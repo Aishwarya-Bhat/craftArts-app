@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Badge, Button, Card } from "react-bootstrap";
+import React, {  } from "react";
+import { Button, Card } from "react-bootstrap";
 import { BsCartPlusFill } from "react-icons/bs";
 import "./productStyle.css";
-import { MDBBadge, MDBIcon } from "mdb-react-ui-kit";
 
 const Product = ({ product, onAddToCart, handleClickImg, windowSize }) => {
   const pageStyles = {
